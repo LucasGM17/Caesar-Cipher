@@ -16,6 +16,9 @@ function caesarCipher(s, k) {
         while(cycle > 25) {
             cycle -= 26;
         }
+        while(cycle < 0) {
+            cycle += 26;
+        }
         transformatedArr.push(alphabet[cycle]); 
      }
  }
@@ -23,10 +26,24 @@ function caesarCipher(s, k) {
     return newWord;
 }
 
-btn.addEventListener('click', () => {
+let checkRes = () => {
     if(str.value.length === 0 || shift.value.length === 0) {
-        alert('Please fill in all the fields!');
+        alert('Please fill out all the fields!');
     } else {
         res.innerHTML = `The result is: ${caesarCipher(str.value, Number(shift.value))}`;
     }
-});
+}
+
+str.addEventListener('keypress', e => {
+    if(e.key === 'Enter') {
+        shift.focus();
+    }
+})
+
+shift.addEventListener('keypress', e => {
+    if(e.key === 'Enter') {
+        checkRes();
+    }
+})
+
+btn.addEventListener('click', checkRes);
